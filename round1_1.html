@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css">
+    <title>Гаеме</title>
+    <meta name="viewport" content="1600px">
+    <meta name="viewport" content="1366px">
+    <meta name="viewport" content="1024px">
+    <meta name="viewport" content="800px">
+    <meta name="viewport" content="480px">
+<style>
+    canvas {
+        border: 5px solid rgba(0, 0, 0, 0.5);
+        }
+        .instr{
+            text-align: center;
+            font-family: 'Times New Roman';
+            font-size: 3rem;
+        }
+        header{
+            width: auto
+        }
+        .btn {
+                color: rgb(0, 0, 0);
+                text-decoration: none;
+                text-align: center;
+                padding: 20px 10px;
+                font-family: 'Times New Roman';
+                font-weight: 700;
+                font-size: 2rem;
+                border-radius: 10px;
+                position: relative;
+            }
+            .btn:hover {
+                background:  rgb(0, 0, 0);
+                transition: 500ms;
+                color: white;
+            }
+            .my_app{
+            text-decoration: none;
+            outline: none;
+            display: inline-block;
+            color: white;
+            padding: 15px 25px;
+            margin: 10px 5px;
+            border-radius: 10px;
+            font-family: 'Times New Roman';
+           
+            letter-spacing: 2px;
+            background-image: linear-gradient(to right, rgb(121, 121, 121) 0%, rgb(22, 22, 22) 51%, rgb(0, 0, 0)100%);
+            background-size: 200% auto;
+            box-shadow: 0 0 20px rgba(0,0,0,.1);
+            transition: .5s;
+            margin-left: 63%;
+        }
+</style>
+</head>
+    <body>
+        <header class="instr">Управление стрелочками
+
+            <h2>Наберите 15 очков, чтобы получить код</h2>
+        </header>
+        
+        <div id="my_app"  class="my_app">
+    <input v-model="code" />
+    <div v-if="code == 451">Я рад, что Вы справились. Честно. Пора на новый уровень. \/
+        <a href="./pyatn.html"><img src="https://c7.hotpng.com/preview/601/839/613/portal-magic-animation-portal.jpg" ></img></a>
+    </div>
+    
+</div>
+        <main><canvas width="600" height="600" id="game"></canvas>
+    <script>
+        let ctx = game.getContext("2d")
+ 
+        let ball = {
+        x: 0,
+        y: 0,
+        r: 10,
+        vx: 2.5,
+        vy: 2.5,
+        }
+ 
+        let player = {
+        x: 250,
+        y: 550,
+        w: 100, 
+        h: 20,
+        vx: 10,
+        vy: 10,
+        }
+ 
+    let score = 0
+
+    let text = "Cheater, stop it ^_^"
+ 
+    function redraw() {
+        ctx.clearRect(0, 0, 800, 600)
+        ctx.fillStyle = "000"
+        ctx.beginPath()
+        ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2)
+        ctx.fill()
+        ball.x += ball.vx
+        ball.y += ball.vy
+ 
+        player.x += player.vx
+ 
+        ctx.fillRect(player.x, player.y, player.w, player.h)
+ 
+
+        if (ball.x > player.x && ball.x < player.x + player.w)
+        if (ball.y + 15 > player.y && ball.y < player.y + player.h) {
+
+        ball.vy = -Math.abs(ball.vy) + Math.random() * 2 - 1
+        score += 1
+        code()
+        }
+ 
+
+    if (ball.x < 0) ball.vx = Math.abs(ball.vx) + 0.5
+    if (ball.x > 600) ball.vx = -Math.abs(ball.vx) - 0.5
+ 
+    if (ball.y < 0) ball.vy = Math.abs(ball.vy) + 0.5
+    if (ball.y > 600) ball.vy = -Math.abs(ball.vy) - 0.5
+
+    if(ball.vy>10) ball.vy=5
+    if(ball.vx>10) ball.vx=5
+
+    if (player.x < 0) player.x = 0
+    if (player.x >= 600) player.x = 500
+ 
+    ctx.font = "30px Arial"
+    ctx.fillText(score, 20, 50)
+    if (ball.y > 564121){ alert("Вы проиграли")
+    
+    }
+else 
+
+if (score>2048){
+    ctx.font="50px Arial"
+    ctx.fillText(text,100,100)
+}
+    requestAnimationFrame(redraw)
+}
+ 
+function move(e) {
+    if (e.keyCode == 39) {
+        player.vx = 15
+    }
+    if (e.keyCode == 37) {
+        player.vx = -15
+    }
+
+    
+}
+ function add(r){
+    if (r.keyCode == 38){
+        score+=1
+        code()
+    } 
+ }
+function stop(e) {
+    player.vx = 0
+}
+
+function code(){
+    if(score>=15){
+        alert("Круто ваш код 451. Пожалуйста, обновите страницу.")
+    }
+}
+    
+
+ 
+function setMenu(e) {
+console.log(a1.getBoundingClientRect().top)
+a1.classList.add("active")
+a1.classList.remove("active")
+}
+    document.addEventListener("keydown",add)
+    document.addEventListener("keydown", move)
+    document.addEventListener("keyup", stop)
+    requestAnimationFrame(redraw)
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        let my_app = new Vue({
+            el: "#my_app",
+            data(){
+                return{code: 0 }
+            },
+        })
+    </script>
+</main>
+<!-- <footer>
+    P.S. если Вы наберете 2048 очков, то вылезет бука))
+    Стрелка вверх = + очки
+</footer> -->
+</body>
+</html>
