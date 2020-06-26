@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="style.css">
-    <title>Гаеме</title>
+    <title>Round 2</title>
     <meta name="viewport" content="1600px">
     <meta name="viewport" content="1366px">
     <meta name="viewport" content="1024px">
     <meta name="viewport" content="800px">
     <meta name="viewport" content="480px">
 <style>
+    body{
+        background-image: url(https://s1.1zoom.ru/b6343/302/Sea_Tropics_Palms_Beach_Swing_531524_1920x1080.jpg);
+    }
     canvas {
         border: 5px solid rgba(0, 0, 0, 0.5);
         }
@@ -21,24 +24,14 @@
             font-size: 3rem;
         }
         header{
-            width: auto
+            width: 50rem;
+            margin-left: 30%;
+            background-color: rgba(0, 0, 0, 0.692);
+            color: seashell;
         }
-        .btn {
-                color: rgb(0, 0, 0);
-                text-decoration: none;
-                text-align: center;
-                padding: 20px 10px;
-                font-family: 'Times New Roman';
-                font-weight: 700;
-                font-size: 2rem;
-                border-radius: 10px;
-                position: relative;
-            }
-            .btn:hover {
-                background:  rgb(0, 0, 0);
-                transition: 500ms;
-                color: white;
-            }
+        h2{
+            font-size: 2rem;
+        }
             .my_app{
             text-decoration: none;
             outline: none;
@@ -55,6 +48,9 @@
             box-shadow: 0 0 20px rgba(0,0,0,.1);
             transition: .5s;
             margin-left: 63%;
+        }
+        .instr{
+            
         }
 </style>
 </head>
@@ -116,6 +112,7 @@
         ball.vy = -Math.abs(ball.vy) + Math.random() * 2 - 1
         score += 1
         code()
+        stop();
         }
  
 
@@ -129,7 +126,10 @@
     if(ball.vx>10) ball.vx=5
 
     if (player.x < 0) player.x = 0
-    if (player.x >= 600) player.x = 500
+    if (player.x >= 600){
+        player.x = 500
+        player.vx = 0
+    } 
  
     ctx.font = "30px Arial"
     ctx.fillText(score, 20, 50)
@@ -159,15 +159,25 @@ function move(e) {
     if (r.keyCode == 38){
         score+=1
         code()
+        stop();
     } 
  }
-function stop(e) {
-    player.vx = 0
+function stop() {
+    if(score>=15){
+        ball.x = 0;
+        ball.y = 0;
+        ball.vx = 0;
+        ball.vy = 0;
+    }
+    
 }
+
+
 
 function code(){
     if(score>=15){
-        alert("Круто ваш код 451. Пожалуйста, обновите страницу.")
+        stop();
+        alert("Круто, ваш код 451.")
     }
 }
     
